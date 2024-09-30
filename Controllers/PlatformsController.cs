@@ -34,7 +34,7 @@ namespace MicroservicesArchitecture.Controllers
         {
             var platformItem = _repository.GetPlatformById(id);
 
-            if(platformItem == null)
+            if(platformItem != null)
             {
                 return Ok(_mapper.Map<PlatformReadDto>(platformItem));
             }
