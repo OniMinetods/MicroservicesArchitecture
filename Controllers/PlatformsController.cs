@@ -5,8 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MicroservicesArchitecture.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class PlatformsController : ControllerBase
     {
         private readonly IPlatformRepo _repository;
@@ -26,6 +26,19 @@ namespace MicroservicesArchitecture.Controllers
             var platformItem = _repository.GetAllPlatforms();
 
             return Ok(_mapper.Map<IEnumerable<PlatformReadDto>>(platformItem));
+        }
+
+        [HttpGet("{id}", Name = "GetPlatformById")]
+        public ActionResult<PlatformReadDto> GetPlatformById(int id)
+        {
+            var platformItem = _repository.GetPlatformById(id);
+
+            if(platformItem == null)
+            {
+                return Ok(_mapper.Map<PlatformReadDto>(platformItem));
+            }
+
+            return NotFound();
         }
     }
 }
